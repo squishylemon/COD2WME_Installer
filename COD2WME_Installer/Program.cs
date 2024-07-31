@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using IWshRuntimeLibrary;
 
@@ -133,47 +134,8 @@ class Program
                 Console.WriteLine($"pocketPcXml - {pocketPcXml}");
             }
         }
-        /*
-        Console.Clear();
-        Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
-        Console.WriteLine("------------------------------------------------");
-        Console.WriteLine("               Installing Save File             ");
-        Console.WriteLine("------------------------------------------------");
-        Console.Beep();
-        string sourceFilePath = Path.Combine(realInstallPath, "SVE", "{00000000-0000-0000-0000-000000000000}.dess");
-        string destinationDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Device Emulator");
-        string destinationFilePath = Path.Combine(destinationDirectory, Path.GetFileName(sourceFilePath));
+        
 
-        try
-        {
-            // Check if the destination directory exists, create it if it doesn't
-            if (!Directory.Exists(destinationDirectory))
-            {
-                Directory.CreateDirectory(destinationDirectory);
-                
-            }
-
-            // Copy the file to the destination directory
-            if (System.IO.File.Exists(sourceFilePath))
-            {
-                System.IO.File.Copy(sourceFilePath, destinationFilePath, true); // true to overwrite if the file already exists
-                Console.Clear();
-                Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
-                Console.WriteLine("------------------------------------------------");
-                Console.WriteLine("               Installed Save File              ");
-                Console.WriteLine("------------------------------------------------");
-                Console.Beep();
-            }
-            else
-            {
-                Console.WriteLine($"Source file does not exist: {sourceFilePath}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-        */
         Console.Clear();
         Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
         Console.WriteLine("------------------------------------------------");
@@ -192,6 +154,8 @@ class Program
             Console.Write(">> ");
             confirmation2 = Console.ReadLine().Trim().ToLower();
         }
+        Console.Clear();
+        
         if (confirmation2 != "yes")
         {
             
@@ -200,10 +164,13 @@ class Program
             Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
             Console.WriteLine("------------------------------------------------");
             Console.WriteLine(" Call Of Duty 2: Windows Mobile Edition Insalled");
+            Console.WriteLine("Steps to run:\n1. Run COD2WME Shortcut found at install director\n2. When Emulator boots click on the `tap here to set owner information` and set a name nothing else is required\n3. Go back out and click the Windows Icon then click on Programs-File Explorer\n4. In File explorer click on my device and select `Storage Card` then run the cod2.exe\nWhy is this not done by this application?\nBecause it would require hex editing the save file and its just not worth the effort to do atm\nNOTE: You can save the emulator state once owner information is inserted so you dont need to insert again");
             Console.WriteLine("------------------------------------------------");
             PlayInstallMusic();
+            Console.ReadLine();
 
-        }else
+        }
+        else
         {
             try
             {
@@ -219,6 +186,11 @@ class Program
             {
                 Console.WriteLine($"Error: Unable to execute shortcut. {ex.Message}");
             }
+            Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine("Steps to run:\n1. Run COD2WME Shortcut found at install director\n2. When Emulator boots click on the `tap here to set owner information` and set a name nothing else is required\n3. Go back out and click the Windows Icon then click on Programs-File Explorer\n4. In File explorer click on my device and select `Storage Card` then run the cod2.exe\nWhy is this not done by this application?\nBecause it would require hex editing the save file and its just not worth the effort to do atm\nNOTE: You can save the emulator state once owner information is inserted so you dont need to insert again");
+            Console.WriteLine("------------------------------------------------");
+            Console.ReadLine();
         }
     }
 
