@@ -133,7 +133,7 @@ class Program
                 Console.WriteLine($"pocketPcXml - {pocketPcXml}");
             }
         }
-
+        /*
         Console.Clear();
         Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
         Console.WriteLine("------------------------------------------------");
@@ -173,7 +173,7 @@ class Program
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
-
+        */
         Console.Clear();
         Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
         Console.WriteLine("------------------------------------------------");
@@ -275,6 +275,7 @@ class Program
 
     static async Task DownloadFileWithProgressAsync(string url, string outputPath)
     {
+        Console.Clear();
         using (var client = new HttpClient())
         using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
         {
@@ -288,6 +289,11 @@ class Program
                 long totalBytesRead = 0;
                 DateTime startTime = DateTime.Now;
 
+                
+                
+
+                int previousProgress = 0;
+
                 while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                 {
                     await fileStream.WriteAsync(buffer, 0, bytesRead);
@@ -297,32 +303,39 @@ class Program
                     {
                         double progress = (double)totalBytesRead / totalBytes.Value;
                         double percentage = progress * 100;
-                        double downloadSpeed = totalBytesRead / 1024.0 / 1024.0 / (DateTime.Now - startTime).TotalSeconds; // MB/s
+                        double elapsedSeconds = (DateTime.Now - startTime).TotalSeconds;
+                        double downloadSpeed = totalBytesRead / 1024.0 / 1024.0 / elapsedSeconds; // MB/s
+
                         bool kbTrue = false;
                         if (downloadSpeed < 1)
                         {
-                            downloadSpeed = totalBytesRead / 1024.0 / (DateTime.Now - startTime).TotalSeconds; // KB/s
+                            downloadSpeed = totalBytesRead / 1024.0 / elapsedSeconds; // KB/s
                             kbTrue = true;
                         }
                         double downloadedMB = totalBytesRead / 1024.0 / 1024.0;
                         double totalMB = totalBytes.Value / 1024.0 / 1024.0;
 
-                        Console.Clear();
-                        Console.WriteLine("Call Of Duty 2: Windows Mobile Edition\nMade For Jamievlong Check Him out at https://twitch.tv/jamievlong ");
-                        Console.WriteLine("------------------------------------------------");
-                        Console.WriteLine(">>          Downloading COD2: WME             <<");
-                        Console.WriteLine($"Downloading... {percentage:0.00}%");
-                        Console.WriteLine($"Downloaded: {downloadedMB:0.00} MB / {totalMB:0.00} MB");
-                        if (kbTrue)
+                        // Only update the display if there is a significant change in progress
+                        if ((int)percentage != previousProgress)
                         {
-                            Console.WriteLine($"Speed: {downloadSpeed:0.00} KB/s");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Speed: {downloadSpeed:0.00} MB/s");
+                            previousProgress = (int)percentage;
+                            Console.SetCursorPosition(0, 1); // Set cursor position to overwrite the progress line
+                            Console.WriteLine("Call Of Duty 2: Windows Mobile Edition");
+                            Console.SetCursorPosition(0, 2);
+                            Console.WriteLine("Made For Jamievlong Check Him out at https://twitch.tv/jamievlong");
+                            Console.SetCursorPosition(0, 3); // Set cursor position to overwrite the progress line
+                            Console.WriteLine("------------------------------------------------");
+                            Console.SetCursorPosition(0, 4); // Set cursor position to overwrite the progress line
+                            Console.WriteLine($"Downloading... {percentage:0.00}%");
+                            Console.SetCursorPosition(0, 5); // Set cursor position to overwrite the downloaded MB line
+                            Console.WriteLine($"Downloaded: {downloadedMB:0.00} MB / {totalMB:0.00} MB");
+                            Console.SetCursorPosition(0, 6); // Set cursor position to overwrite the speed line
+                            Console.WriteLine($"Speed: {downloadSpeed:0.00} {(kbTrue ? "KB/s" : "MB/s")}");
+                            Console.SetCursorPosition(0, 7); // Set cursor position to overwrite the progress line
+                            Console.WriteLine("------------------------------------------------");
                         }
                         
-                        Console.WriteLine("------------------------------------------------");
+                        
                     }
                 }
             }
